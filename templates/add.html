@@ -1,0 +1,7 @@
+{% extends "base.html" %} {% block content %}
+<div class="bg-white text-cyan-500 mb-8 shadow-md p-8 rounded-xl grid grid-cols-1 gap-4">
+    <div class="w-fit mx-auto fa fa-wifi text-cyan-600 text-4xl"></div>
+    <h1 class="text-base">Please connect to wifi having a name started with <span class="text-cyan-600 font-bold">WM</span>.</h1>
+    <button class="mt-8 px-8 py-2 rounded-xl bg-cyan-700 hover:bg-cyan-500 text-white" onclick="window.open('/wifi-list', '_self'); document.getElementById('spin').style.display = 'flex' ">Done</button>
+</div>
+{% endblock %}

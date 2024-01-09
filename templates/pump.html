@@ -1,0 +1,247 @@
+{% extends "base.html" %} {% block nav %}
+<h1 class="text-white font-bold text-xl" id="name">{{pump.name}}</h1>
+{% endblock %} {% block content %}
+
+<div id="disconnected" class="px-8 py-2 bg-red-100 text-red-500 my-4">
+    The device is disconnected from internet
+</div>
+<div class="pt-4 px-0 mb-4 mt-20 bg-cyan-700 rounded-xl shadow-md">
+    <div class="">
+        <div class="text-xl mb-2 font-bold text-white px-4 rounded-xl">
+            water level
+        </div>
+        <div class="text-stone-200 text-base ms-4 mb-4">ကန်ထဲရှိရေပမာဏ</div>
+    </div>
+    <div class="bg-cyan-900 z-50 w-16 p-2 mt-2">
+    </div>
+    <div class="bg-cyan-900 z-50 h-8 w-4 p-2 ms-12 ">
+    </div>
+    <div class="grid grid-cols-12 z-10 gap-2 mt-8 ">
+        <div class="overflow-hidden col-span-8 -mt-[50px] border-t-0 relative border-white border-r-2 shadow-md rounded-bl-xl w-full h-[250px] flex place-content-center items-center bg-gradient-to-b from-teal-400 to-cyan-700 ">
+            <div id="level" class="bg-cyan-700 rounded-b-xl absolute top-0 left-0 w-full h-0 "></div>
+            <div>
+                <svg id="wave" class="shadow-none absolute bottom-0 left-0 w-full h-10 " xmlns="http://www.w3.org/2000/svg " xmlns:xlink="http://www.w3.org/1999/xlink " viewBox="0 24 150 28 " preserveAspectRatio="none " shape-rendering="auto ">
+        <defs>
+          <path
+            id="gentle-wave"
+            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z "
+          />
+        </defs>
+        <g class="parallax ">
+          <use
+            xlink:href="#gentle-wave"
+            x="48 "
+            y="0 "
+            fill="rgba(45, 212, 191, 0.2) "
+          />
+          <use
+            xlink:href="#gentle-wave"
+            x="48 "
+            y="3 "
+            fill="rgba(45, 212, 191, 0.4) "
+          />
+          <use
+            xlink:href="#gentle-wave"
+            x="48 "
+            y="5 "
+            fill="rgba(45, 212, 191, 0.7) "
+          />
+          <use
+            xlink:href="#gentle-wave"
+            x="48 "
+            y="7 "
+            fill="rgba(45, 212, 191) "
+          />
+        </g>
+      </svg>
+            </div>
+            <div id="percentage" class="absolute bottom-2 left-18 text-white text-xl ">
+                Level {{pump.level}}
+            </div>
+        </div> 
+        <div id="levels" class="col-span-2 -mt-[55px] relative">
+            <div id="triangle" class="triangle-left absolute top-[90px] left-[25px]"></div>
+            <h1 id="level-text" class="text-white font-bold text-xl absolute top-[90px] left-[50px]">60%</h1>
+            <div id="l5" class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-8 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div id="l4" class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-8 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div id="l3" class="rounded-xl bg-stone-300 mt-[12.5px] h-[6px] w-8 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div id="l2" class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-8 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div id="l1" class="rounded-xl bg-stone-300 mt-[12.5px]  h-[2px] w-8 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-4 "></div>
+            <!-- <div class="rounded-xl bg-stone-300 mt-[12.5px] h-[2px] w-8 "></div> -->
+        </div>
+        <div class="grid-cols-2 -ms-2 font-bold text-xl text-white flex items-center">
+            <!-- {{pump.level * 20}}&nbsp;% -->
+        </div>
+    </div>
+</div>
+
+<div class="p-2 bg-white shadow-md rounded-xl ">
+    <div class="mb-8 flex flex-row justify-between ">
+        <div class="p-4">
+            <p class="mb-1 text-center text-stone-800 font-bold text-sm ">
+                Input Voltage
+            </p>
+            <p class="mb-2 text-center text-stone-500 text-sm ">
+                လျှပ်စစ်မီးအား
+            </p>
+            <div class="wrapper ">
+                <div class="circle-out ">
+                    <div class="circle volt "></div>
+                    <span class="text volt-text text-lg mt-4">{{pump.volt}} V</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4">
+            <p class="mb-1 text-center text-stone-800 font-bold text-sm ">
+                Motor Current
+            </p>
+            <p class="mb-2 text-center text-stone-500 text-sm ">မော်တာလျှပ်စီး</p>
+            <div class="wrapper ">
+                <div class="circle-out ">
+                    <div class="circle current "></div>
+                    <span class="text current-text text-lg mt-4">{{pump.current}} A</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="grid grid-cols-6 gap-2 my-4 ">
+        <img src="/static/assets/motor.jpg " class="w-full col-span-2 -ms-2 -mt-4" />
+        <div class="bg-stone-200 -mt-2 ps-8 pe-2 py-2 rounded-xl col-span-4 ">
+            <ul class="list-disc ">
+                <li class="z-50 my-4 text-stone-600 text-sm " id="status1">
+                    {% if pump.state_one %}Motor Running{% else %}Motor Resting{% endif %}
+                </li>
+                <li class="z-50 my-4 text-stone-600 text-sm " id="status2">
+                    {% if pump.state_one %}‌‌ရေတင်နေသည်{% else %}မော်တာရပ်နားထားသည်{% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mb-4 flex flex-row justify-between ">
+        <button id="btn1" onclick="stateOne() " class="w-[7.5rem] py-2 bg-cyan-700 hover:bg-cyan-500 text-white rounded-lg ">
+      Quick Start
+    </button>
+        <button id="btn2" onclick="stateTwo() " class="w-[7.5rem] py-2 bg-orange-600 hover:bg-orange-400 text-white rounded-lg ">
+      Force Stop
+    </button>
+    </div>
+</div>
+
+<script>
+    const updateCurrent = createProgressBar(".current ", 0, 20);
+    const updateVolt = createProgressBar(".volt ", 130, 250);
+
+    const token = localStorage.getItem("token");
+
+    function update() {
+        fetch("/api/pumps/get?token=" + token + "&name=" + "{{pump.name}}")
+            .then((res) => res.json())
+            .then((data) => {
+                latest_modified = data.latest_modified;
+                now = data.now;
+                disconnected = document.getElementById("disconnected");
+                difference = parseInt(now) - parseInt(latest_modified);
+                console.log(difference);
+                if (difference > 60) {
+                    disconnected.innerText = 'The device is disconnected from internet'
+                    disconnected.classList.remove('bg-lime-100')
+                    disconnected.classList.remove('text-lime-500')
+                    disconnected.classList.add('bg-red-100')
+                    disconnected.classList.add('text-red-500')
+                } else {
+                    disconnected.innerText = 'The device is currently connected to internet'
+                    disconnected.classList.add('bg-lime-100')
+                    disconnected.classList.add('text-lime-500')
+                    disconnected.classList.remove('bg-red-100')
+                    disconnected.classList.remove('text-red-500')
+                }
+                if (data.level) {
+                    document.getElementById("percentage").innerText = "Level " + data.level;
+                    document.getElementById("percentage").classList.remove('text-red-500')
+                    document.getElementById("percentage").classList.add('text-white')
+                    document.getElementById('wave').style.display = 'block'
+
+                } else {
+                    document.getElementById("percentage").innerText = "Empty Level";
+                    document.getElementById("percentage").classList.remove('text-white')
+                    document.getElementById("percentage").classList.add('text-red-500')
+                    document.getElementById('wave').style.display = 'none'
+                }
+                if (data.level == 5) {
+                    level = 27;
+                } else {
+                    level = 248 - 250 * ((20 * data.level) / 100) + 27;
+                }
+
+                console.log(163 - level);
+                console.log(document.getElementById("wave").style.display);
+
+                document.getElementById("level").style.height = level + "px ";
+
+                document.getElementById("wave").style.bottom = 246 - level + "px ";
+                updateCurrent(data.current)
+                updateVolt(data.volt)
+                document.querySelector(".current-text ").innerText = data.current + " A ";
+                document.querySelector(".volt-text ").innerText = data.volt + " V ";
+                console.log(data.state_one);
+                if (data.state_one == 1) {
+                    document.getElementById("status1").innerText = "Motor Running ";
+                    document.getElementById("status2").innerText = "‌မော်တာမောင်းနေသည် ";
+                    document.getElementById("btn1").classList.remove("bg-cyan-700");
+                    document.getElementById("btn1").classList.add("bg-cyan-100");
+                    document.getElementById("btn2").classList.add("bg-orange-600");
+                    document.getElementById("btn2").classList.remove("bg-orange-100");
+                } else {
+                    document.getElementById("status1").innerText = "Motor Resting ";
+                    document.getElementById("status2").innerText = "မော်တာရပ်နားထားသည် ";
+                    document.getElementById("btn2").classList.remove("bg-orange-600");
+                    document.getElementById("btn2").classList.add("bg-orange-100");
+                    document.getElementById("btn1").classList.add("bg-cyan-700");
+                    document.getElementById("btn1").classList.remove("bg-cyan-100");
+                }
+                document.getElementById("btn1").innerText = "Quick Start ";
+                document.getElementById("btn2").innerText = "Force Stop ";
+            });
+    }
+
+    setInterval(update, 1000);
+
+    function stateOne() {
+        document.getElementById("btn1").innerText = "... ";
+        state_one = 1;
+        fetch(
+            "/api/pumps/update?token=" +
+            token +
+            " &name=" +
+            " {{pump.name}}&state_one=" +
+            state_one
+        );
+        update();
+    }
+
+    function stateTwo() {
+        document.getElementById("btn2").innerText = "... ";
+        state_one = 0;
+        fetch(
+            "/api/pumps/update?token=" +
+            token +
+            "&name=" +
+            "{{pump.name}}&state_one=" +
+            state_one
+        );
+        update();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<script>
+    const scanner = require('node-wifi-scanner');
+
+    scanner.scan((err, networks) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log(networks);
+    });
+</script> {% endblock %}

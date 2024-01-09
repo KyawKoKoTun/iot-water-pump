@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+<div class="rounded-xl p-8 bg-white shadow-md">
+    <form>
+        <p class="mb-4">Already have an account? <a class="text-cyan-700 underline" onclick=" document.getElementById('spin').style.display='flex';" href="/login">Login!</a></p>
+        <h1 class="mb-8 font-bold text-2xl">Register</h1>
+        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="text" placeholder="Name" name="name" required>
+        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="text" placeholder="Email" name="email" required>
+        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="password" placeholder="Password" name="password" required>
+        <p class="hidden bg-red-100 text-red-600 px-4 py-2 -mb-6 rounded-lg" id="error">An error occur.</p>
+        <p class="hidden bg-green-100 text-green-600 px-4 py-2 -mb-6 rounded-lg" id="success">Success.</p>
+        <button onclick="register(event)" class="mt-8 px-8 py-2 rounded-xl bg-cyan-700 hover:bg-cyan-500 text-white ">Register</button> </form>
+</div>
+
+<script>
+    function register(event) {
+        event.preventDefault()
+        document.getElementById('error').style.display = 'none'
+        document.getElementById('success').style.display = 'none'
+        email = document.querySelector('input[name="email"]').value
+        password = document.querySelector('input[name="password"]').value
+        fetch("/api/register?email=" + email + "&password=" + password + "&name=" + name)
+            .then(res => {
+                if (res.status != 200) {
+                    document.getElementById('error').style.display = 'block'
+                } else {
+                    document.getElementById('success').style.display = 'block'
+                    return res.json()
+
+                }
+            })
+            .then(data => {
+                if (data) {
+                    localStorage.setItem("token", data.token)
+
+                    window.open('/', '_self')
+                }
+            })
+    }
+</script>{% endblock %}
