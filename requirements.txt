@@ -5,3 +5,4 @@ secrets
 flask-migrate==4.0.4
 python-dotenv
 psycopg2
+gunicorn
