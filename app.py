@@ -1,13 +1,22 @@
 from flask import *
 from models import *
 from migrate import *
-import secrets
 import time
 
 app = Flask(__name__)
 app.config.from_pyfile('settings.py')
 db.init_app(app)
 migrate.init_app(app, db)
+
+import random
+import string
+
+def generate_unique_string(length=8):
+    # Define the character set (uppercase, lowercase letters, and digits)
+    characters = string.ascii_letters + string.digits
+    # Generate a random string of the specified length
+    return ''.join(random.choices(characters, k=length))
+
 
 
 @app.route('/register')
@@ -49,7 +58,7 @@ def register_user():
     data = request.args
     name = data.get('name')
     email = data.get('email')
-    token = secrets.token_hex(nbytes=8)
+    token = generate_unique_string()
     password = data.get('password')
 
     new_user = User(name=name, email=email, token=token,

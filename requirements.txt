@@ -1,7 +1,6 @@
 flask==2.2.2
 sqlalchemy==1.4.45
 flask-sqlalchemy==2.5.1
-secrets
 flask-migrate==4.0.4
 python-dotenv
 psycopg2
