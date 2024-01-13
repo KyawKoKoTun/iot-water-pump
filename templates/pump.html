@@ -130,7 +130,7 @@
     const updateCurrent = createProgressBar(".current ", 0, 20);
     const updateVolt = createProgressBar(".volt ", 130, 250);
 
-    const token = '{{pump.token}}';
+    const token = localStorage.getItem('token');
 
     function update() {
         fetch("/api/pumps/get?token=" + token + "&name=" + "{{pump.name}}")
@@ -235,10 +235,11 @@
         if (confirm('Are you sure to delete this pump?')) {
             document.getElementById("btn3").innerText = "... ";
             fetch(
-                "/api/pumps/{{pump.id}}/remove?token="+localStorage.getItem('token')
+                "/api/pumps/{{pump.id}}/remove?token="+token
             ).then(res=>{
                 if(res.ok){
                     alert('This pump has been successfully deleted')
+                    window.open('/', '_self')
                 }
                 else{
                     alert('An error occured!')
