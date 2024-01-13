@@ -14,8 +14,22 @@
     </div>
     <div class="bg-cyan-900 z-50 w-16 p-2 mt-2">
     </div>
-    <div class="bg-cyan-900 z-50 h-8 w-4 p-2 ms-12 ">
+    <div id="pipe" class="bg-cyan-900 z-50 h-8 w-4 p-2 ms-12 ">
+
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pipe = document.getElementById('pipe');
+
+            for (let i = 0; i < 20; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('drop');
+                drop.style.animationDelay = `${i * 0.2}s`;
+                pipe.appendChild(drop);
+            }
+        });
+
+    </script>
     <div class="grid grid-cols-12 z-10 gap-2 mt-8 ">
         <div
             class="overflow-hidden col-span-8 -mt-[50px] border-t-0 relative border-white border-r-2 shadow-md rounded-bl-xl w-full h-[250px] flex place-content-center items-center bg-gradient-to-b from-teal-400 to-cyan-700 ">
@@ -26,7 +40,7 @@
                     viewBox="0 24 150 28 " preserveAspectRatio="none " shape-rendering="auto ">
                     <defs>
                         <path id="gentle-wave"
-                              d="M-160 44c20 0 38-15 58-15s38 15 58 15 38-15 58-15 38 15 58 15 v44h-232z" />
+                            d="M-160 44c20 0 38-15 58-15s38 15 58 15 38-15 58-15 38 15 58 15 v44h-232z" />
                     </defs>
                     <g class="parallax ">
                         <use xlink:href="#gentle-wave" x="48 " y="0 " fill="rgba(45, 212, 191, 0.2) " />
@@ -235,13 +249,13 @@
         if (confirm('Are you sure to delete this pump?')) {
             document.getElementById("btn3").innerText = "... ";
             fetch(
-                "/api/pumps/{{pump.id}}/remove?token="+localStorage.getItem('token')
-            ).then(res=>{
-                if(res.ok){
+                "/api/pumps/{{pump.id}}/remove?token=" + localStorage.getItem('token')
+            ).then(res => {
+                if (res.ok) {
                     alert('This pump has been successfully deleted')
                     window.open('/', '_self')
                 }
-                else{
+                else {
                     alert('An error occured!')
                     document.getElementById("btn3").innerText = "Delete Pump"
                 }

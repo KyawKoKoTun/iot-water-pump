@@ -103,3 +103,37 @@
 	border-top: 25px solid rgb(250, 36, 21);
 	border-right: 12.5px solid transparent;
 }
+
+#pipe {
+    position: relative;
+}
+
+.drop {
+    position: absolute;
+    bottom: 0; /* Start at the bottom of the pipe */
+    left: 20%; /* Center the drop */
+    width: 10px; /* Size of the drop */
+    height: 15px;
+    background-image: url('/static/assets/drop.png');
+    background-size: cover;
+    animation: fall 1s linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        bottom: -10px;
+        opacity: 1;
+    }
+    100% {
+        bottom: -100px; /* Drop falls 200px */
+        opacity: 0; /* Fade out at the end */
+    }
+}
+
+/* Add more .drop elements with different animation-delay to simulate continuous falling */
+.drop:nth-child(1) {
+    animation-delay: 0s;
+}
+.drop:nth-child(2) {
+    animation-delay: 0.2s;
+}
