@@ -130,10 +130,10 @@
     const updateCurrent = createProgressBar(".current ", 0, 20);
     const updateVolt = createProgressBar(".volt ", 130, 250);
 
-    const token = localStorage.getItem('token');
+    const token = '{{pump.token}}';
 
     function update() {
-        fetch("/api/pumps/get?token=" + token + "&name=" + "{{pump.name}}")
+        fetch("/api/pumps/get?token=" + localStorage.getItem('token') + "&name=" + "{{pump.name}}")
             .then((res) => res.json())
             .then((data) => {
                 latest_modified = data.latest_modified;
