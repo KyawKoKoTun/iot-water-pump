@@ -2,30 +2,31 @@
 <div class="bg-white shadow-md p-8 rounded-xl">
     <h1 class="text-2xl mb-8 font-bold">Add a device</h1>
     <div>
-        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="text" placeholder="SSID" name="ssid" required>
-        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="text" placeholder="Password" name="password" required>
-        <p class="hidden bg-green-100 text-green-600 px-4 py-2 -mb-6 rounded-lg" id="loading">Sending data...</p>
-        <button onclick="add()" class="mt-8 px-8 py-2 rounded-xl bg-cyan-700 hover:bg-cyan-500 text-white ">Add Device</button> </form>
+        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="text" placeholder="Pump ID" name="pump_token" required>
+        <input class="w-full rounded-lg px-4 block my-2 py-2 border-0 bg-stone-200" type="text" placeholder="Name the pump" name="name" required>
+        <p class="hidden bg-green-100 text-green-600 px-4 py-2 -mb-6 rounded-lg" id="loading">Adding device...</p>
+        <button onclick="add()" class="mt-8 px-8 py-2 rounded-xl bg-cyan-700 hover:bg-cyan-500 text-white ">Add Pump</button> </form>
     </div>
 </div>
 
 <script>
     function add() {
         token = localStorage.getItem('token');
-        name = document.querySelector('input[name="name"]').value;
-        ssid = sessionStorage.getItem('ssid')
-        password = document.querySelector('input[name="password"]').value;
-        ip = 'http://192.168.4.1/connect';
-        console.log('sending data...')
-        document.getElementById('loading').style.display = 'block';
-        fetch(`${ip}?token=${token}&name=${name}&ssid=${ssid}&password=${password}`).then(res => {
-            console.log(res.json());
-            alert("Device's credentials sent to IP! Redirecting to home.")
-            document.getElementById('loading').style.display = 'none';
-            window.open('/', '_self')
-        }).catch((error) => {
-            alert("Can't connect to device.")
-            document.getElementById('loading').style.display = 'none';
+        pump_token = document.querySelector('input[name="pump_token"]').value;
+        pump_name = document.querySelector('input[name="name"]').value
+        document.getElementById('loading').style.display = 'block'
+        fetch(`/api/pumps/add?token=${token}&pump_id=${pump_token}&name=${pump_name}`).then((res)=>{
+            if(res.ok){
+                alert('Successfully Added!')
+                window.open('/', '_self')
+            }
+            else{
+                return res.json()
+            }
+        })
+        .then((data)=>{
+            alert(data.message)
+            document.getElementById('loading').style.display = 'none'
         })
     }
 </script>{% endblock %}

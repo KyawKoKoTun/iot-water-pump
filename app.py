@@ -36,7 +36,7 @@ def home():
 
 @app.route('/add')
 def add():
-    return render_template('add.html')
+    return render_template('add_confirm.html')
 
 @app.route('/wifi-list')
 def wifi_list():
@@ -58,7 +58,7 @@ def register_user():
     data = request.args
     name = data.get('name')
     email = data.get('email')
-    token = generate_unique_string()
+    token = generate_unique_string(length=32)
     password = data.get('password')
 
     new_user = User(name=name, email=email, token=token,
@@ -151,16 +151,21 @@ def update_user_pump():
 def add_user_pump():
     data = request.args
     token = request.args['token']
+    pump_token = request.args['pump_id']
     user = User.query.filter_by(token=token)[0]
     if not user.token == token:
         return jsonify({'message': 'Not authorized'}), 401
 
     try:
-        Pump.query.filter_by(name=data.get('name'), user_id=user.id)[0]
+        pump = Pump.query.filter_by(token=pump_token)[0]
+        if(pump.user == user):
+            return jsonify({'message': 'Pump already exists'}), 403
+        else:
+            return jsonify({'message': 'Not authorized'}), 401
     except:
         pump = Pump(name=data.get('name'), level=0, current=0,
                     volt=0, state_one=0, state_two=0,
-                    user=user)
+                    user=user, token=pump_token)
         db.session.add(pump)
         db.session.commit()
     return jsonify({'message': 'Pump added successfully'})

@@ -16,6 +16,7 @@ class User(db.Model):
 
 class Pump(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String)
     name = db.Column(db.String)
     level = db.Column(db.Integer)
     current = db.Column(db.Float)
