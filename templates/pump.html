@@ -17,48 +17,29 @@
     <div class="bg-cyan-900 z-50 h-8 w-4 p-2 ms-12 ">
     </div>
     <div class="grid grid-cols-12 z-10 gap-2 mt-8 ">
-        <div class="overflow-hidden col-span-8 -mt-[50px] border-t-0 relative border-white border-r-2 shadow-md rounded-bl-xl w-full h-[250px] flex place-content-center items-center bg-gradient-to-b from-teal-400 to-cyan-700 ">
+        <div
+            class="overflow-hidden col-span-8 -mt-[50px] border-t-0 relative border-white border-r-2 shadow-md rounded-bl-xl w-full h-[250px] flex place-content-center items-center bg-gradient-to-b from-teal-400 to-cyan-700 ">
             <div id="level" class="bg-cyan-700 rounded-b-xl absolute top-0 left-0 w-full h-0 "></div>
             <div>
-                <svg id="wave" class="shadow-none absolute bottom-0 left-0 w-full h-10 " xmlns="http://www.w3.org/2000/svg " xmlns:xlink="http://www.w3.org/1999/xlink " viewBox="0 24 150 28 " preserveAspectRatio="none " shape-rendering="auto ">
-        <defs>
-          <path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z "
-          />
-        </defs>
-        <g class="parallax ">
-          <use
-            xlink:href="#gentle-wave"
-            x="48 "
-            y="0 "
-            fill="rgba(45, 212, 191, 0.2) "
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48 "
-            y="3 "
-            fill="rgba(45, 212, 191, 0.4) "
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48 "
-            y="5 "
-            fill="rgba(45, 212, 191, 0.7) "
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48 "
-            y="7 "
-            fill="rgba(45, 212, 191) "
-          />
-        </g>
-      </svg>
+                <svg id="wave" class="shadow-none absolute bottom-0 left-0 w-full h-10 "
+                    xmlns="http://www.w3.org/2000/svg " xmlns:xlink="http://www.w3.org/1999/xlink "
+                    viewBox="0 24 150 28 " preserveAspectRatio="none " shape-rendering="auto ">
+                    <defs>
+                        <path id="gentle-wave"
+                            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z " />
+                    </defs>
+                    <g class="parallax ">
+                        <use xlink:href="#gentle-wave" x="48 " y="0 " fill="rgba(45, 212, 191, 0.2) " />
+                        <use xlink:href="#gentle-wave" x="48 " y="3 " fill="rgba(45, 212, 191, 0.4) " />
+                        <use xlink:href="#gentle-wave" x="48 " y="5 " fill="rgba(45, 212, 191, 0.7) " />
+                        <use xlink:href="#gentle-wave" x="48 " y="7 " fill="rgba(45, 212, 191) " />
+                    </g>
+                </svg>
             </div>
             <div id="percentage" class="absolute bottom-2 left-18 text-white text-xl ">
                 Level {{pump.level}}
             </div>
-        </div> 
+        </div>
         <div id="levels" class="col-span-2 -mt-[55px] relative">
             <div id="triangle" class="triangle-left absolute top-[90px] left-[25px]"></div>
             <h1 id="level-text" class="text-white font-bold text-xl absolute top-[90px] left-[50px]">60%</h1>
@@ -130,20 +111,26 @@
         </div>
     </div>
     <div class="mb-4 flex flex-row justify-between ">
-        <button id="btn1" onclick="stateOne() " class="w-[7.5rem] py-2 bg-cyan-700 hover:bg-cyan-500 text-white rounded-lg ">
-      Quick Start
-    </button>
-        <button id="btn2" onclick="stateTwo() " class="w-[7.5rem] py-2 bg-orange-600 hover:bg-orange-400 text-white rounded-lg ">
-      Force Stop
-    </button>
+        <button id="btn1" onclick="stateOne() "
+            class="w-[7.5rem] py-2 bg-cyan-700 hover:bg-cyan-500 text-white rounded-lg ">
+            Quick Start
+        </button>
+        <button id="btn2" onclick="stateTwo() "
+            class="w-[7.5rem] py-2 bg-orange-600 hover:bg-orange-400 text-white rounded-lg ">
+            Force Stop
+        </button>
     </div>
+    <button id="btn3" onclick="deletePump() "
+        class="w-full mt-4 py-2 bg-orange-400 hover:bg-orange-600 text-white rounded-lg ">
+        Delete Pump
+    </button>
 </div>
 
 <script>
     const updateCurrent = createProgressBar(".current ", 0, 20);
     const updateVolt = createProgressBar(".volt ", 130, 250);
 
-    const token = localStorage.getItem("token");
+    const token = '{{pump.token}}';
 
     function update() {
         fetch("/api/pumps/get?token=" + token + "&name=" + "{{pump.name}}")
@@ -242,6 +229,26 @@
             state_one
         );
         update();
+    }
+
+    function deletePump() {
+        if (confirm('Are you sure to delete this pump?')) {
+            document.getElementById("btn3").innerText = "... ";
+            fetch(
+                "/api/pumps/update?token=" +
+                token +
+                "&id=" +
+                "{{pump.id}}"
+            ).then(res=>{
+                if(res.ok){
+                    alert('This pump has been successfully deleted')
+                }
+                else{
+                    alert('An error occured!')
+                    document.getElementById("btn3").innerText = "Delete Pump"
+                }
+            })
+        }
     }
 </script>
 {% endblock %}

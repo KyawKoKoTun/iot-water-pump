@@ -128,8 +128,7 @@ def get_user_pump():
 def update_user_pump():
     data = request.args
     token = data['token']
-    user = User.query.filter_by(token=token)[0]
-    pump = Pump.query.filter_by(user_id=user.id, name=data['name'])[0]
+    pump = Pump.query.filter_by(token=token)[0]
     if pump:
         pump.name = data.get('name', pump.name)
         pump.level = data.get('level', pump.level)
