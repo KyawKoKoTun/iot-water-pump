@@ -235,7 +235,7 @@
         if (confirm('Are you sure to delete this pump?')) {
             document.getElementById("btn3").innerText = "... ";
             fetch(
-                "/api/pumps/{{pump.id}}/remove?token="+token
+                "/api/pumps/{{pump.id}}/remove?token="+localStorage.getItem('token')
             ).then(res=>{
                 if(res.ok){
                     alert('This pump has been successfully deleted')
